@@ -4,8 +4,8 @@ import datetime
 import view.water
 import os
 
-app = Flask(__name__)
-
+app = Flask(__name__, template_folder='template')
+print (__name__)
 
 def template(title="HELLO!", text=""):
     now = datetime.datetime.now()
@@ -62,7 +62,7 @@ def auto_water(toggle):
             except:
                 pass
         if not running:
-            os.system("python3.4 auto_water.py&")
+            os.system("python auto_water.py&")
     else:
         template_data = template(text="Auto Watering Off")
         os.system("pkill -f water.py")
