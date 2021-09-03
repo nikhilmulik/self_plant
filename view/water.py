@@ -51,7 +51,7 @@ def pump_on(pump_number=2, delay=2):
     init_output(pump_pin)
     print('>>>>', pump_pin, '  >>', delay)
     f = open("last_watered.txt", "w")
-    f.write("Last watered {}".format(datetime.datetime.now()))
+    f.write("{}".format(datetime.datetime.now()))
     f.close()
     GPIO.output(pump_pin, GPIO.LOW)
     time.sleep(delay)

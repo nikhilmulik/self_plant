@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 import psutil
 import datetime
 import view.water
@@ -7,7 +7,7 @@ import os
 app = Flask(__name__, template_folder='template')
 print (__name__)
 
-def template(title="HELLO!", text=""):
+def template(title="SelfPlanter", text=""):
     now = datetime.datetime.now()
     time_string = now
     template_date = {
@@ -42,10 +42,11 @@ def action():
     return render_template('main.html', **template_data)
 
 
-@app.route("/water")
-def action2():
-    view.water.pump_on(2, 1)
-    template_data = template(text="Watered Once")
+@app.route("/water", methods=['GET'])
+def manual_trigger():
+    cycle = request.args.get('cycle')
+    view.water.pump_on(cycle, 1)
+    template_data = template(text="Watered "+cycle+" times")
     return render_template('main.html', **template_data)
 
 
