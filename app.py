@@ -44,9 +44,24 @@ def action():
 
 @app.route("/water", methods=['GET'])
 def manual_trigger():
+#     import pdb; pdb.set_trace()
     cycle = request.args.get('cycle')
-    view.water.pump_on(cycle, 1)
-    template_data = template(text="Watered "+cycle+" times")
+    try:
+        if cycle.isnumeric():
+            cycle = int(cycle)
+            view.water.pump_on(cycle)
+        else:
+            view.water.pump_on()
+    except():
+        print("ERROR: reading request parameter")
+    template_data = template(text="Watered "+str(cycle)+" times")
+    return render_template('main.html', **template_data)
+
+
+@app.route("/motor1", methods=['GET'])
+def motor1():
+    view.water.pump_on(pump_number = 1)
+    template_data = template(text="Motor 1 ran")
     return render_template('main.html', **template_data)
 
 

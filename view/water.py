@@ -46,10 +46,11 @@ def auto_water(delay=5, pump_pin=7, water_sensor_pin=8):
         GPIO.cleanup()  # cleanup all GPI
 
 
-def pump_on(pump_number=2, delay=2):
+def pump_on(delay=2, pump_number=2):
+    print(">>>>", pump_number)
     pump_pin = config_pump(pump_number)
-    init_output(pump_pin)
     print('>>>>', pump_pin, '  >>', delay)
+    init_output(pump_pin)
     f = open("last_watered.txt", "w")
     f.write("{}".format(datetime.datetime.now()))
     f.close()
