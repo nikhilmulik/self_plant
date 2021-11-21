@@ -22,7 +22,6 @@ def get_status(pin=8):
 
 
 def init_output(pin):
-    
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, GPIO.LOW)
     GPIO.output(pin, GPIO.HIGH)
@@ -47,16 +46,16 @@ def auto_water(delay=5, pump_pin=7, water_sensor_pin=8):
 
 
 def pump_on(delay=2, pump_number=2):
-    print(">>>>", pump_number)
+    print("pump_number >>", pump_number)
     pump_pin = config_pump(pump_number)
-    print('>>>>', pump_pin, '  >>', delay)
+    print('Pin #: ', pump_pin, '  Delay:', delay)
     init_output(pump_pin)
     f = open("last_watered.txt", "w")
     f.write("{}".format(datetime.datetime.now()))
     f.close()
-    GPIO.output(pump_pin, GPIO.LOW)
-    time.sleep(delay)
     GPIO.output(pump_pin, GPIO.HIGH)
+    time.sleep(delay)
+    GPIO.output(pump_pin, GPIO.LOW)
 
 
 def config_pump(pump_number):
@@ -64,3 +63,10 @@ def config_pump(pump_number):
         return 17
     if pump_number == 2:
         return 22
+
+def hot_kill():
+    print("?>>>>>>>>>>>",config_pump(1))
+    init_output(config_pump(1))
+    GPIO.output(17, GPIO.LOW)
+    init_output(config_pump(2))
+    GPIO.output(22, GPIO.LOW)

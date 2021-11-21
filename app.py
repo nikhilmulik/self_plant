@@ -42,6 +42,15 @@ def action():
     return render_template('main.html', **template_data)
 
 
+@app.route("/kill", methods=['GET'])
+def hot_kill():
+    view.water.hot_kill()
+    msg = "{0} : Done !".format(datetime.datetime.now())
+    template_data = template(text=msg)
+    return render_template('main.html', **template_data)
+   
+
+    
 @app.route("/water", methods=['GET'])
 def manual_trigger():
 #     import pdb; pdb.set_trace()
